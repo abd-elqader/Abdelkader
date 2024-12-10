@@ -3,7 +3,7 @@ import * as postService from './post.service.js';
 
 export const postRouter = Router();
 
-postRouter.get('/', postService.getpost);
-postRouter.post('/', postService.addpost);
-postRouter.put('/', postService.updatepost);
-postRouter.delete('/', postService.deletepost);
+postRouter.get('/', postService.getPost);
+postRouter.post('/', postService.addPost);
+postRouter.put('/', postService.updatePost);
+postRouter.delete('/', postService.deletePost);

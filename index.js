@@ -6,6 +6,7 @@ const port = 3000;
 
 bootstrap(app, express);
 
-app.listen(port, () => {
+app.listen(port, (error) => {
+    if (error) return error;
     console.log("Server started on port", port);
 });

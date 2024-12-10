@@ -6,7 +6,7 @@ export const sequelize = new Sequelize('assignment8', 'root', '',{
     host: 'localhost',
 })
 
-const checkConnection = async () => {
+export const checkConnection = async () => {
     try {
         await sequelize.authenticate();
         console.log("Connection has been established successfully.");

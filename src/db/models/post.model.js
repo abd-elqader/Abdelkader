@@ -1,26 +1,38 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../database.controller.js";
+import { User } from "./user.model.js";
 
+export class Post extends Model {}
+    Post.init(
+        {
+            title: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+                body: {
+                type: DataTypes.TEXT,
+                allowNull: false,
+            }
+        },
+        { 
+            sequelize,
+            modelName: "Post", 
+        }
+);
 
-const Post = sequelize.define('Post',{
-    'title': {
-        type: DataTypes.STRING,
+Post.belongsTo(User, {
+    foreignKey: {
+        name: "user_id",
         allowNull: false,
     },
-    'body': {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    'user_id': {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    }
-})
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
+});
 
 export const syncPost = async () => {
     try {
-        await Comment.sync()
+        await Post.sync({ alter: true, force: true });
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-}
+};

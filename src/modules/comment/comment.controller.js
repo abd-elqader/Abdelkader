@@ -3,7 +3,7 @@ import * as commentService from './comment.service.js';
 
 export const commentRouter = Router();
 
-commentRouter.get('/', commentService.getcomment);
-commentRouter.post('/', commentService.addcomment);
-commentRouter.put('/', commentService.updatecomment);
-commentRouter.delete('/', commentService.deletecomment);
+commentRouter.get('/', commentService.getComment);
+commentRouter.post('/', commentService.addComment);
+commentRouter.put('/', commentService.updateComment);
+commentRouter.delete('/', commentService.deleteComment);

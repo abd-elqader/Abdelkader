@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../database.controller.js";
 
-const User = sequelize.define('User',{
+export const User = sequelize.define('User',{
     'name': {
         type: DataTypes.STRING,
         allowNull: false,
@@ -15,7 +15,7 @@ const User = sequelize.define('User',{
         }
     },
     'role': {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('user', 'admin'),
         allowNull: false,
         defaultValue: 'user'
     }
@@ -23,7 +23,7 @@ const User = sequelize.define('User',{
 
 export const syncUser = async () => {
     try {
-        await Comment.sync()
+        await User.sync()
     } catch (error) {
         console.log(error)
     }
