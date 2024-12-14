@@ -1,15 +1,36 @@
 import { User } from "../../db/models/user.model.js";
 
-export const register = async (req, res, next) => {
-    // to create
-    try{
-        const userCreated = await User.create(req.body)
-        return res.json({ 'message' : true, 'data' : userCreated})
-    } catch(error){
-        console.log(error);
-    }
-}
+export const signup = async (req, res, next) => {
 
-export const login = (req, res, next) => {
-    return res.json({message: "login"});
+    try {
+        const { email, name, password } = req.body;
+
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
+            return res.status(400).json({ message: "Email already exists" });
+        }
+
+        const newUser = User.build({ email, name, password });
+        await newUser.save();
+
+        return res.status(201).json({
+            message: "User created successfully",
+            data: newUser,
+        });
+    } catch (error) {
+        console.error("Error during user creation:", error);
+
+        if (error.name === "SequelizeValidationError") {
+            const validationErrors = error.errors.map((err) => err.message);
+            return res.status(400).json({
+                message: "Validation errors",
+                errors: validationErrors,
+            });
+        }
+
+        return res.status(500).json({
+            message: "An unexpected error occurred",
+            error: error.message,
+        });
+    }
 }

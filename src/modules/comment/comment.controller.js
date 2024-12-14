@@ -3,7 +3,9 @@ import * as commentService from './comment.service.js';
 
 export const commentRouter = Router();
 
-commentRouter.get('/', commentService.getComment);
-commentRouter.post('/', commentService.addComment);
-commentRouter.put('/', commentService.updateComment);
-commentRouter.delete('/', commentService.deleteComment);
+commentRouter.post('/', commentService.createBulkComments);
+commentRouter.patch('/:commentId', commentService.updateCommentContent);
+commentRouter.post('/find-or-create', commentService.findOrCreateComment);
+commentRouter.get('/search', commentService.searchComments);
+commentRouter.get('/newest/:postId', commentService.getNewestComments);
+commentRouter.get('/details/:id', commentService.getCommentDetails);

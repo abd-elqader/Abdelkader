@@ -3,7 +3,7 @@ import { sequelize } from "../database.controller.js";
 import { User } from "./user.model.js";
 import { Post } from "./post.model.js";
 
-class Comment extends Model {}
+export class Comment extends Model {}
 
 Comment.init(
     {
@@ -12,29 +12,31 @@ Comment.init(
         allowNull: false,
         }
     },
-    { 
+    {
         sequelize,
         modelName: "Comment", 
     }
 );
 
-Comment.belongsTo(User, {
-    foreignKey: {
-        name: "user_id",
-        allowNull: false,
-    },
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-});
+export const defineCommentAssociations = () => {
+    Comment.belongsTo(User, {
+        foreignKey: {
+            name: "user_id",
+            allowNull: false,
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+    });
 
-Comment.belongsTo(Post, {
-    foreignKey: {
-        name: "post_id",
-        allowNull: false,
-    },
-    onDelete: "CASCADE",
-    onUpdate: "CASCADE",
-});
+    Comment.belongsTo(Post, {
+        foreignKey: {
+            name: "post_id",
+            allowNull: false,
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+    });
+};
 
 export const syncComment = async () => {
     try {
